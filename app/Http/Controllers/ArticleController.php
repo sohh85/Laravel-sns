@@ -39,7 +39,7 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    // editアクションメソッド内の$articleにはArticleモデルのインスタンスが代入
+    // editアクションメソッド内の$articleにはArticleモデルのインスタンスが代入される
     public function edit(Article $article)
     {
         return view('articles.edit', ['article' => $article]);
