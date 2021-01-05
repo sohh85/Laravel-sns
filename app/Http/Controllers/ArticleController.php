@@ -38,4 +38,10 @@ class ArticleController extends Controller
         $article->save();
         return redirect()->route('articles.index');
     }
+
+    // editアクションメソッド内の$articleにはArticleモデルのインスタンスが代入
+    public function edit(Article $article)
+    {
+        return view('articles.edit', ['article' => $article]);
+    }
 }
