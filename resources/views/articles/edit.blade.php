@@ -17,6 +17,7 @@
                         <!-- ['article' => $article]が、['article' => $article->id]でもOK -->
                         <form method="POST" action="{{ route('articles.update', ['article' => $article]) }}">
                             @method('PATCH')
+                            <!-- 部分更新 -->
                             @include('articles.form')
                             <button type="submit" class="btn blue-gradient btn-block">更新する</button>
                         </form>

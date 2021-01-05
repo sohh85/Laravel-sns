@@ -19,6 +19,7 @@
             </div>
 
             <!-- もし自分の投稿だったら右上に削除更新などのメニュー表示 -->
+            <!-- Authファサードのidメソッドでログイン中のユーザーのidを取得 -->
             @if( Auth::id() === $article->user_id )
             <!-- dropdown -->
             <div class="ml-auto card-text">
@@ -53,6 +54,7 @@
                         <form method="POST" action="{{ route('articles.destroy', ['article' => $article]) }}">
                             @csrf
                             @method('DELETE')
+                            <!-- 削除 -->
                             <div class="modal-body">
                                 {{ $article->title }}を削除します。よろしいですか？
                             </div>
