@@ -13,7 +13,8 @@
                     @include('error_card_list')
                     <div class="card-text">
                         <!-- route関数の第二引数の連想配列のarticleをキーとする$articleが入る -->
-                        <!-- $articleはidではなくArticleクラスのインスタンスですが問題なくURLを生成してくれる -->
+                        <!-- $articleはidではなくArticleクラスのインスタンスだが問題なくURLを生成してくれる -->
+                        <!-- ['article' => $article]が、['article' => $article->id]でもOK -->
                         <form method="POST" action="{{ route('articles.update', ['article' => $article]) }}">
                             @method('PATCH')
                             @include('articles.form')
