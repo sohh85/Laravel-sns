@@ -21,10 +21,14 @@ class ArticleRequest extends FormRequest
      *
      * @return array
      */
+
+    // バリデーションのルールを定義
     public function rules()
     {
         return [
-            //
+            // 連想配列形式で、キーにパラメーターを、値にバリデーションルールを指定
+            'title' => 'required|max:50',
+            'body' => 'required|max:500',
         ];
     }
 }
