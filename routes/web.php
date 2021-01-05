@@ -14,4 +14,5 @@
 Auth::routes();
 // このWebアプリ（/）にアクセスされたら、 ArticleControllerコントローラーのindexメソッドを呼び出す
 Route::get('/', 'ArticleController@index')->name('articles.index');
-Route::resource('/articles', 'ArticleController')->except(['index'])->middleware('auth');
+Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
+Route::resource('/articles', 'ArticleController')->only(['show']); //-- この行を追加
