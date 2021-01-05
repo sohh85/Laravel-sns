@@ -31,4 +31,13 @@ class ArticleRequest extends FormRequest
             'body' => 'required|max:500',
         ];
     }
+
+    // バリデーションエラーメッセージに表示される項目名をカスタマイズ
+    public function attributes()
+    {
+        return [
+            'title' => 'タイトル',
+            'body' => '本文',
+        ];
+    }
 }
