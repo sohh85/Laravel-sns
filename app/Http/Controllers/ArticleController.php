@@ -44,4 +44,18 @@ class ArticleController extends Controller
     {
         return view('articles.edit', ['article' => $article]);
     }
+
+    // 記事更新時の処理
+    public function update(ArticleRequest $request, Article $article)
+    {
+        $article->fill($request->all())->save();
+        return redirect()->route('articles.index');
+    }
+
+    // 記事削除時の処理
+    public function destroy(Article $article)
+    {
+        $article->delete();
+        return redirect()->route('articles.index');
+    }
 }
