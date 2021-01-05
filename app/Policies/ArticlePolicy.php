@@ -16,7 +16,8 @@ class ArticlePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    // 他ユーザーが書いた記事を一覧画面や詳細画面で見て良いので一律true
+    public function viewAny(?User $user) // ?を付けると、その引数がnullであることも許容
     {
         return true;
     }
@@ -28,7 +29,8 @@ class ArticlePolicy
      * @param  \App\Article  $article
      * @return mixed
      */
-    public function view(User $user, Article $article)
+    // 他ユーザーが書いた記事を一覧画面や詳細画面で見て良いので一律true
+    public function view(?User $user, Article $article) // ?を付けると、その引数がnullであることも許容
     {
         return true;
     }
@@ -39,6 +41,7 @@ class ArticlePolicy
      * @param  \App\User  $user
      * @return mixed
      */
+    // コントローラーのcreate/storeアクションメソッドに対応
     public function create(User $user)
     {
         return true;
@@ -51,8 +54,10 @@ class ArticlePolicy
      * @param  \App\Article  $article
      * @return mixed
      */
+    // コントローラのedit/updateアクションメソッドに対応
     public function update(User $user, Article $article)
     {
+        // ログイン中のユーザーのIDと記事モデルのユーザーIDが一致すればtrue
         return $user->id === $article->user_id;
     }
 
@@ -63,6 +68,7 @@ class ArticlePolicy
      * @param  \App\Article  $article
      * @return mixed
      */
+    // コントローラのdeleteアクションメソッドに対応
     public function delete(User $user, Article $article)
     {
         return $user->id === $article->user_id;
