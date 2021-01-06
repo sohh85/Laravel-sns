@@ -18,5 +18,6 @@ class ForgotPasswordController extends Controller
     |
     */
 
+    // SendsPasswordResetEmailsトレイトをuse
     use SendsPasswordResetEmails;
 }
