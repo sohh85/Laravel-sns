@@ -26,7 +26,6 @@ class BareMail extends Mailable
      *
      * @return $this
      */
-    // メソッド内にメールの宛先や件名、使用するテンプレート(Blade)などを設定するコードを追加した上で自分自身を返す
     public function build()
     {
         return $this;
