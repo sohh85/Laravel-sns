@@ -20,6 +20,7 @@
                     @endif
 
                     <div class="card-text">
+                        <!-- POST送信先は名前付きルートpassword.email -->
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
 
