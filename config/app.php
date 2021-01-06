@@ -52,6 +52,8 @@ return [
     |
     */
 
+    // インターネットに公開した際には、Laravelアプリケーションが動く本番サーバの環境変数APP_URLには、'http://localhost'ではなく、そのサービスのインターネット上のURLを設定
+    // env関数でAPP_URLを取得。存在しない場合は第２引数がデフォルト値になる
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),

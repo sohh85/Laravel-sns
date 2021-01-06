@@ -9,3 +9,4 @@
 その場合は、このメールは破棄していただいて結構です。
 
 memo({{ url(config('app.url')) }})
+<!-- config関数を使いconfig/app.phpの'url'という値を取得 -->
