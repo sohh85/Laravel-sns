@@ -30,4 +30,9 @@ class Article extends Model
             ? (bool)$this->likes->where('id', $user->id)->count()
             : false; // コレクションにはwhere(キー名, 値)がある
     }
+
+    public function getCountLikesAttribute(): int  // いいねの数を計算するメソッド
+    { // $this->likesにより、記事モデルからlikesテーブル経由で紐付いているユーザーが、コレクションで帰る
+        return $this->likes->count();
+    }
 }

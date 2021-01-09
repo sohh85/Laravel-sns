@@ -51,8 +51,8 @@
         </div>
         <!-- modal -->
         @endif
-
     </div>
+
     <div class="card-body pt-0">
         <h3 class="h4 card-title">
             <a class="text-dark" href="{{ route('articles.show', ['article' => $article]) }}">
@@ -65,8 +65,10 @@
     </div>
     <div class="card-body pt-0 pb-2 pl-3">
         <div class="card-text">
-            <article-like>
+            <article-like :initial-is-liked-by='@json($article->isLikedBy(Auth::user()))' :initial-count-likes='@json($article->count_likes)'>
+                <!-- count_likes（いいね数）を、Vueコンポーネントのプロパティに渡す -->
             </article-like>
         </div>
     </div>
+
 </div>
