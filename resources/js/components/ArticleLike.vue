@@ -3,7 +3,10 @@
     <button type="button" class="btn m-0 p-1 shadow-none">
       <i
         class="fas fa-heart mr-1"
-        :class="{ 'red-text': this.isLikedBy }"
+        :class="{
+          'red-text': this.isLikedBy,
+          'animated heartBeat fast': this.gotToLike,
+        }"
         @click="clickLike"
       />
       <!-- @clickハートアイコンがクリックされた時にclickLikeメソッドを実行 -->
@@ -38,6 +41,7 @@ export default {
       isLikedBy: this.initialIsLikedBy,
       countLikes: this.initialCountLikes,
       // bladeから渡されたいいね数が入ったプロパティinitialCountLikesを、countLikesにセット
+      gotToLike: false,
     };
   },
 
@@ -55,12 +59,14 @@ export default {
 
       this.isLikedBy = true;
       this.countLikes = response.data.countLikes;
+      this.gotToLike = true;
     },
     async unlike() {
       const response = await axios.delete(this.endpoint);
 
       this.isLikedBy = false;
       this.countLikes = response.data.countLikes;
+      this.gotToLike = false;
     },
   },
 };
