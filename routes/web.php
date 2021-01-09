@@ -16,3 +16,8 @@ Auth::routes();
 Route::get('/', 'ArticleController@index')->name('articles.index');
 Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
 Route::resource('/articles', 'ArticleController')->only(['show']);
+// Routeファサードのprefix()は、引数として渡した文字列をURIの先頭に付ける
+Route::prefix('articles')->name('articles.')->group(function () {
+    Route::put('/{article}/like', 'ArticleController@like')->name('like')->middleware('auth');
+    Route::delete('/{article}/like', 'ArticleController@unlike')->name('unlike')->middleware('auth');
+});
