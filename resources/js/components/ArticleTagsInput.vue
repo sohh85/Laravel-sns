@@ -27,27 +27,16 @@ export default {
     },
   },
 
+  //bladeから渡された全タグ情報を受け取る
+  autocompleteItems: {
+    type: Array,
+    default: [],
+  },
+
   data() {
     return {
       tag: "",
       tags: this.initialTags, //プロパティinitialTagsをデータtagsの初期値としてセット
-      autocompleteItems: [
-        {
-          text: "Spain",
-        },
-        {
-          text: "France",
-        },
-        {
-          text: "USA",
-        },
-        {
-          text: "Germany",
-        },
-        {
-          text: "China",
-        },
-      ],
     };
   },
 

@@ -32,7 +32,7 @@ class ArticleController extends Controller
         });
 
         return view('articles.create', [
-            'allTagNames' => $allTagNames,
+            'allTagNames' => $allTagNames, //タグテーブルからすべてのタグを取得しbladeに渡す
         ]);
     }
 
@@ -70,7 +70,7 @@ class ArticleController extends Controller
         return view('articles.edit', [
             'article' => $article,
             'tagNames' => $tagNames,
-            'allTagNames' => $allTagNames,
+            'allTagNames' => $allTagNames, //タグテーブルからすべてのタグを取得しbladeに渡す
         ]);
     }
 
