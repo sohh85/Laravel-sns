@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Tag;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -32,8 +33,8 @@ class ArticleController extends Controller
         });
 
         return view('articles.create', [
-            'allTagNames' => $allTagNames, //タグテーブルからすべてのタグを取得しbladeに渡す
-        ]);
+            'allTagNames' => $allTagNames,
+        ]); //タグテーブルからすべてのタグを取得しbladeに渡す
     }
 
     // 第一引数$requestはA(ArticleRequestクラスのインスタンス)と指定
@@ -70,8 +71,8 @@ class ArticleController extends Controller
         return view('articles.edit', [
             'article' => $article,
             'tagNames' => $tagNames,
-            'allTagNames' => $allTagNames, //タグテーブルからすべてのタグを取得しbladeに渡す
-        ]);
+            'allTagNames' => $allTagNames,
+        ]); //タグテーブルからすべてのタグを取得しbladeに渡す
     }
 
     // 記事更新時の処理

@@ -19,18 +19,16 @@ export default {
   components: {
     VueTagsInput,
   },
-
   props: {
     initialTags: {
       type: Array,
       default: [],
     },
-  },
-
-  //bladeから渡された全タグ情報を受け取る
-  autocompleteItems: {
-    type: Array,
-    default: [],
+    autocompleteItems: {
+      //自動補完のため、bladeから渡された全タグ情報を受け取る（タグ入力時に候補として表示）
+      type: Array,
+      default: [],
+    },
   },
 
   data() {
@@ -39,14 +37,12 @@ export default {
       tags: this.initialTags, //プロパティinitialTagsをデータtagsの初期値としてセット
     };
   },
-
   computed: {
     filteredItems() {
       return this.autocompleteItems.filter((i) => {
         return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
       });
     },
-
     tagsJson() {
       // データtagsをJSON形式の文字列に変換
       return JSON.stringify(this.tags);
