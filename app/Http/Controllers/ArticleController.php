@@ -25,7 +25,7 @@ class ArticleController extends Controller
         return view('articles.index', ['articles' => $articles]);
     }
 
-    public function create()
+    public function create() //記事投稿
     {
         $allTagNames = Tag::all()->map(function ($tag) {
             return ['text' => $tag->name];
@@ -57,15 +57,20 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function edit(Article $article)
+    public function edit(Article $article) //記事編集
     {
         $tagNames = $article->tags->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
+        $allTagNames = Tag::all()->map(function ($tag) {
             return ['text' => $tag->name];
         });
 
         return view('articles.edit', [
             'article' => $article,
             'tagNames' => $tagNames,
+            'allTagNames' => $allTagNames,
         ]);
     }
 
