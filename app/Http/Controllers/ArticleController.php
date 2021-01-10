@@ -30,7 +30,7 @@ class ArticleController extends Controller
     }
 
     // 第一引数$requestはA(ArticleRequestクラスのインスタンス)と指定
-    // 指定することで、A以外のものが来たらTypeErrorという例外を発生させれる
+    // 指定することで、A以外のものが来たらTypeErrorという例外を発生させる
     // int とか string とかも指定できる 
     // （DI）コントローラーはメソッドの引数で型宣言を行うと、そのクラスのインスタンスが自動生成されメソッド内で使える
     public function store(ArticleRequest $request, Article $article)
@@ -50,7 +50,14 @@ class ArticleController extends Controller
     // editアクションメソッド内の$articleにはArticleモデルのインスタンスが代入される
     public function edit(Article $article)
     {
-        return view('articles.edit', ['article' => $article]);
+        $tagNames = $article->tags->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
+        return view('articles.edit', [
+            'article' => $article,
+            'tagNames' => $tagNames,
+        ]);
     }
 
     // 記事更新時の処理
