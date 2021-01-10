@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Tag;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
 
@@ -35,8 +36,6 @@ class ArticleController extends Controller
     // （DI）コントローラーはメソッドの引数で型宣言を行うと、そのクラスのインスタンスが自動生成されメソッド内で使える
     public function store(ArticleRequest $request, Article $article)
     {
-        // Articleモデルのインスタンスである$articleのtitle、bodyプロパティに対し、
-        // 記事登録画面から送信されたPOSTリクエストのtitleと本文bodyの値をそれぞれ代入
         // allメソッドで送信された値を配列で取得
         $article->fill($request->all());
         // リクエストのuserメソッドを使うとUserクラスのインスタンスにアクセスできる。
@@ -44,10 +43,13 @@ class ArticleController extends Controller
         $article->user_id = $request->user()->id;
         // saveメソッドでarticlesテーブルにレコードを新規登録
         $article->save();
+        $request->tags->each(function ($tagName) use ($article) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $article->tags()->attach($tag);
+        });
         return redirect()->route('articles.index');
     }
 
-    // editアクションメソッド内の$articleにはArticleモデルのインスタンスが代入される
     public function edit(Article $article)
     {
         $tagNames = $article->tags->map(function ($tag) {
@@ -64,6 +66,11 @@ class ArticleController extends Controller
     public function update(ArticleRequest $request, Article $article)
     {
         $article->fill($request->all())->save();
+        $article->tags()->detach();
+        $request->tags->each(function ($tagName) use ($article) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $article->tags()->attach($tag);
+        });
         return redirect()->route('articles.index');
     }
 
