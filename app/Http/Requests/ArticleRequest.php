@@ -33,7 +33,7 @@ class ArticleRequest extends FormRequest
         ];
     }
 
-    // バリデーションエラーメッセージに表示される項目名をカスタマイズ
+    //バリデーションエラーメッセージに表示される項目名をカスタマイズ
     public function attributes()
     {
         return [
@@ -41,5 +41,15 @@ class ArticleRequest extends FormRequest
             'body' => '本文',
             'tags' => 'タグ',
         ];
+    }
+
+    //フォームリクエストのバリデーションが成功した後に自動的に呼ばれるメソッド
+    public function passedValidation()
+    { //便利な関数使うために、collectでコレクションに変換
+        $this->tags = collect(json_decode($this->tags)) //json_decode関数でjsonデータを連想配列に変換
+            ->slice(0, 5) //要素が0~5以外の場合カット
+            ->map(function ($requestTag) {
+                return $requestTag->text;
+            });
     }
 }
