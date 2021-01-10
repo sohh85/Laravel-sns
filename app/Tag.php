@@ -17,4 +17,9 @@ class Tag extends Model
     {
         return '#' . $this->name;
     }
+
+    public function articles(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Article')->withTimestamps();
+    }
 }
