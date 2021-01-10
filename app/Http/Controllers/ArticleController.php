@@ -43,9 +43,10 @@ class ArticleController extends Controller
         $article->user_id = $request->user()->id;
         // saveメソッドでarticlesテーブルにレコードを新規登録
         $article->save();
+        //eachメソッドでタグの数だけ行われる。
         $request->tags->each(function ($tagName) use ($article) {
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $article->tags()->attach($tag);
+            $tag = Tag::firstOrCreate(['name' => $tagName]); //firstOrCreateメソッドで重複登録回避
+            $article->tags()->attach($tag); //中間テーブルarticle_tagに保存
         });
         return redirect()->route('articles.index');
     }
