@@ -19,10 +19,18 @@ export default {
   components: {
     VueTagsInput,
   },
+
+  props: {
+    initialTags: {
+      type: Array,
+      default: [],
+    },
+  },
+
   data() {
     return {
       tag: "",
-      tags: [],
+      tags: this.initialTags, //プロパティinitialTagsをデータtagsの初期値としてセット
       autocompleteItems: [
         {
           text: "Spain",
@@ -42,12 +50,14 @@ export default {
       ],
     };
   },
+
   computed: {
     filteredItems() {
       return this.autocompleteItems.filter((i) => {
         return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
       });
     },
+
     tagsJson() {
       // データtagsをJSON形式の文字列に変換
       return JSON.stringify(this.tags);
