@@ -35,4 +35,9 @@ class Article extends Model
     { // $this->likesにより、記事モデルからlikesテーブル経由で紐付いているユーザーが、コレクションで帰る
         return $this->likes->count();
     }
+
+    public function tags(): BelongsToMany
+    { // belongsToManyの第２引数には中間テーブル名が必要だがテーブルの単数形を繋げた名前なので省略できる
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
 }

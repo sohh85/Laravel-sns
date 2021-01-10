@@ -29,6 +29,7 @@ class ArticleRequest extends FormRequest
             // 連想配列形式で、キーにパラメーターを、値にバリデーションルールを指定
             'title' => 'required|max:50',
             'body' => 'required|max:500',
+            'tags' => 'json|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
         ];
     }
 
@@ -38,6 +39,7 @@ class ArticleRequest extends FormRequest
         return [
             'title' => 'タイトル',
             'body' => '本文',
+            'tags' => 'タグ',
         ];
     }
 }
