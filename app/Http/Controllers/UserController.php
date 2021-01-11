@@ -13,6 +13,6 @@ class UserController extends Controller
 
         return view('users.show', [
             'user' => $user,
-        ]);
+        ]); //ユーザーモデルの入った変数$userをbladeに渡す
     }
 }
