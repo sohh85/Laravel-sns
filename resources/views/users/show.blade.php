@@ -13,7 +13,6 @@
                 </a>
                 @if( Auth::id() !== $user->id )
                 <follow-button class="ml-auto" :initial-is-followed-by='@json($user->isFollowedBy(Auth::user()))'>
-                    <!-- @jsonで結果を値じゃなく、文字列としてvueコンポーネントに渡す -->
                 </follow-button>
                 @endif
             </div>
