@@ -17,7 +17,7 @@ class UserController extends Controller
     }
 
     public function follow(Request $request, string $name)
-    {
+    { // URIのname部分が引数$nameに渡る
         $user = User::where('name', $name)->first();
 
         if ($user->id === $request->user()->id) {
@@ -29,6 +29,7 @@ class UserController extends Controller
         $request->user()->followings()->attach($user);
         // $request->user()で、リクエストを行なったユーザーのユーザーモデルが返る
 
+        // どのユーザのフォローが成功したかを配列で返す
         return ['name' => $name];
     }
 
