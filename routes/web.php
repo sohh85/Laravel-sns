@@ -24,7 +24,9 @@ Route::prefix('articles')->name('articles.')->group(function () {
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
+    Route::get('/{name}/likes', 'UserController@likes')->name('likes');
     // ログインの認証を行うmiddleware('auth')。ControllerだけでなくこのようにRouteでも使える
+    // ログイン済でなければ使えない機能のルートはこの中に記述
     Route::middleware('auth')->group(function () {
         Route::put('/{name}/follow', 'UserController@follow')->name('follow');
         Route::delete('/{name}/follow', 'UserController@unfollow')->name('unfollow');
