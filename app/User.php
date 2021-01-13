@@ -52,6 +52,13 @@ class User extends Authenticatable
         return $this->belongsToMany('App\User', 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
+    // followersメソッドとは3,4引数が逆。
+    // ユーザーモデルにfollowingsメソッドを作成したことで、UserControllerのfollow/unfollowアクションメソッドは完成となります。
+    public function followings(): BelongsToMany
+    {
+        return $this->belongsToMany('App\User', 'follows', 'follower_id', 'followee_id')->withTimestamps();
+    }
+
     public function isFollowedBy(?User $user): bool
     {
         return $user
