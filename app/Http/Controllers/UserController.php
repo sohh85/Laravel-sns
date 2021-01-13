@@ -21,6 +21,18 @@ class UserController extends Controller
         ]); //ユーザーモデル$userとユーザの記事一覧（コレクション）をbladeに渡す
     }
 
+    public function likes(string $name)
+    {
+        $user = User::where('name', $name)->first();
+
+        $articles = $user->likes->sortByDesc('created_at');
+
+        return view('users.likes', [
+            'user' => $user,
+            'articles' => $articles,
+        ]);
+    }
+
     public function follow(Request $request, string $name)
     { // URIのname部分が引数$nameに渡る
         $user = User::where('name', $name)->first();
