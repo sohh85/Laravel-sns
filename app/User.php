@@ -67,11 +67,11 @@ class User extends Authenticatable
     }
 
     // followersメソッドで帰ってきたコレクションの数を、->count()で数える。
+    // $user->count_followers としてbladeで使用
     public function getCountFollowersAttribute(): int
     {
         return $this->followers->count();
     }
-
     public function getCountFollowingsAttribute(): int
     {
         return $this->followings->count();
