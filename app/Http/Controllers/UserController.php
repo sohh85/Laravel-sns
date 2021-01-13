@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\User; //userモデル読み込み
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,9 +11,14 @@ class UserController extends Controller
     {
         $user = User::where('name', $name)->first();
 
+        // sortByDescメソッドを使って投稿日(created_at)の降順にソートし、変数$articleに代入
+        // userモデルのarticles()に->articleの形式で使用
+        $articles = $user->articles->sortByDesc('created_at');
+
         return view('users.show', [
             'user' => $user,
-        ]); //ユーザーモデルの入った変数$userをbladeに渡す
+            'articles' => $articles,
+        ]); //ユーザーモデル$userとユーザの記事一覧（コレクション）をbladeに渡す
     }
 
     public function follow(Request $request, string $name)
