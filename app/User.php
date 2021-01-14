@@ -6,6 +6,7 @@ use App\Mail\BareMail;
 use App\Notifications\PasswordResetNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany; //一対多の関係なので
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -45,6 +46,11 @@ class User extends Authenticatable
         $this->notify(new PasswordResetNotification($token, new BareMail()));
     }
 
+    public function articles(): HasMany
+    {
+        return $this->hasMany('App\Article');
+    }
+
     // ユーザーモデルとユーザーモデルの関係は多対多なので、belongsToManyメソッド使用
     public function followers(): BelongsToMany
     { // 「テーブル名の単数形_id」に当てはまらないので、第三第四引数必要
@@ -59,6 +65,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\User', 'follows', 'follower_id', 'followee_id')->withTimestamps();
     }
 
+    public function likes(): BelongsToMany
+    { // いいね、のユーザと記事は「多対多」なのでBelongsToMany
+        return $this->belongsToMany('App\Article', 'likes')->withTimestamps();
+    }
+
     public function isFollowedBy(?User $user): bool
     {
         return $user
@@ -67,11 +78,11 @@ class User extends Authenticatable
     }
 
     // followersメソッドで帰ってきたコレクションの数を、->count()で数える。
+    // $user->count_followers としてbladeで使用
     public function getCountFollowersAttribute(): int
     {
         return $this->followers->count();
     }
-
     public function getCountFollowingsAttribute(): int
     {
         return $this->followings->count();
