@@ -86,4 +86,29 @@ class RegisterController extends Controller
             'token' => $token, //Googleが発行したトークン
         ]);
     }
+
+    public function registerProviderUser(Request $request, string $provider)
+    {
+        $request->validate([ // 値のバリデーション
+            'name' => ['required', 'string', 'alpha_num', 'min:3', 'max:16', 'unique:users'],
+            'token' => ['required', 'string'],
+        ]);
+
+        $token = $request->token;
+
+        $providerUser = Socialite::driver($provider)->userFromToken($token);
+
+        // ユーザーモデルのcreateメソッドを使って、ユーザーモデルのインスタンスを作成
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $providerUser->getEmail(),
+            'password' => null,
+        ]);
+
+        // Illuminate / Foundation / Auth / RegistersUsersのregisterメソッドを参考に
+        $this->guard()->login($user, true);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
 }
