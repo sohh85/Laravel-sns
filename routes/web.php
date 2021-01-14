@@ -17,6 +17,10 @@ Route::prefix('login')->name('login.')->group(function () {
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
 });
+// ソーシャルログインで、未登録の場合の処理
+Route::prefix('register')->name('register.')->group(function () {
+    Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
+});
 // このWebアプリ（/）にアクセスされたら、 ArticleControllerコントローラーのindexメソッドを呼び出す
 Route::get('/', 'ArticleController@index')->name('articles.index');
 Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');

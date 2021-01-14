@@ -68,6 +68,7 @@ class LoginController extends Controller
             return $this->sendLoginResponse($request); //ログイン後の画面に遷移
         } // ここでreturnすることでこのあとの登録処理に移らない
 
+        // このように第2引数でパラメータを連想配列で渡せる
         return redirect()->route('register.{provider}', [
             'provider' => $provider,
             'email' => $providerUser->getEmail(),
