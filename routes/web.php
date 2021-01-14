@@ -15,6 +15,7 @@ Auth::routes();
 // ソーシャルログイン、今後他のサービス使う際にもこのルート使えるように、{provider}とする
 Route::prefix('login')->name('login.')->group(function () {
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
+    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
 });
 // このWebアプリ（/）にアクセスされたら、 ArticleControllerコントローラーのindexメソッドを呼び出す
 Route::get('/', 'ArticleController@index')->name('articles.index');
