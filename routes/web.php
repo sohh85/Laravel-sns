@@ -16,16 +16,19 @@ Auth::routes();
 Route::get('/', 'ArticleController@index')->name('articles.index');
 Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
 Route::resource('/articles', 'ArticleController')->only(['show']);
-// Routeファサードのprefix()は、引数として渡した文字列をURIの先頭に付ける
+// Routeファサードのprefix()は、引数として渡した文字列を子要素URIの先頭に付ける
 Route::prefix('articles')->name('articles.')->group(function () {
     Route::put('/{article}/like', 'ArticleController@like')->name('like')->middleware('auth');
     Route::delete('/{article}/like', 'ArticleController@unlike')->name('unlike')->middleware('auth');
 });
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
+
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
     Route::get('/{name}/likes', 'UserController@likes')->name('likes');
-    // ログインの認証を行うmiddleware('auth')。ControllerだけでなくこのようにRouteでも使える
+    Route::get('/{name}/followings', 'UserController@followings')->name('followings');
+    Route::get('/{name}/followers', 'UserController@followers')->name('followers');
+    // ログイン認証を行うmiddleware('auth')。ControllerだけでなくこのようにRouteでも使える
     // ログイン済でなければ使えない機能のルートはこの中に記述
     Route::middleware('auth')->group(function () {
         Route::put('/{name}/follow', 'UserController@follow')->name('follow');
