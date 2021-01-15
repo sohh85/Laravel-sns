@@ -9,7 +9,8 @@ class UserController extends Controller
 {
     public function show(string $name)
     {
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()
+            ->load(['articles.user', 'articles.likes', 'articles.tags']);
 
         // sortByDescメソッドを使って投稿日(created_at)の降順にソートし、変数$articleに代入
         // userモデルのarticles()に->articleの形式で使用
