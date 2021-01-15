@@ -41,13 +41,13 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // gppgleログインボタンが押されたら
+    // googleログインボタンが押されたら
     public function redirectToProvider(string $provider)
     { //socialiteのdriverメソッドに外部サービス名を渡す → redirectメソッドでそのサービスにリダイレクト
         return Socialite::driver($provider)->redirect();
     }
 
-    // google側でアカウントが選択されたら
+    // 連携サービス側からコールバックしてきたら
     public function handleProviderCallback(Request $request, string $provider)
     {
         // Laravel\Socialite\Two\User（googleのユーザ情報）を取得し変数に代入

@@ -105,7 +105,7 @@ class RegisterController extends Controller
             'password' => null,
         ]);
 
-        // Illuminate / Foundation / Auth / RegistersUsersのregisterメソッドを参考に
+        // 通常のログイン処理 → Illuminate / Foundation / Auth / RegistersUsersのregisterメソッドを参考に
         $this->guard()->login($user, true);
 
         return $this->registered($request, $user)
