@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; // $request
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
@@ -85,5 +85,30 @@ class RegisterController extends Controller
             'email' => $providerUser->getEmail(), //Googleから取得したメールアドレス
             'token' => $token, //Googleが発行したトークン
         ]);
+    }
+
+    public function registerProviderUser(Request $request, string $provider)
+    {
+        $request->validate([ // 値のバリデーション
+            'name' => ['required', 'string', 'alpha_num', 'min:3', 'max:16', 'unique:users'],
+            'token' => ['required', 'string'],
+        ]);
+
+        $token = $request->token;
+
+        $providerUser = Socialite::driver($provider)->userFromToken($token);
+
+        // ユーザーモデルのcreateメソッドを使って、ユーザーモデルのインスタンスを作成
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $providerUser->getEmail(),
+            'password' => null,
+        ]);
+
+        // 通常のログイン処理 → Illuminate / Foundation / Auth / RegistersUsersのregisterメソッドを参考に
+        $this->guard()->login($user, true);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 }

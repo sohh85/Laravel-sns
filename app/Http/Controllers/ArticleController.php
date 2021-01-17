@@ -17,11 +17,12 @@ class ArticleController extends Controller
         $this->authorizeResource(Article::class, 'article');
     }
 
-
     public function index()
     {
-        // Articleモデルの全データが(sortByDescメソッドで)最新の投稿日時順に並び替えられた上で$articles に代入
-        $articles = Article::all()->sortByDesc('created_at');
+        // 全部の記事が(sortByDescメソッドで)最新の投稿日時順に並び替えられた上で$articles に代入
+        // loadメソッドを使い、リレーション先テーブルからもデータ取得。これによりユーザ記事一覧でsqlの回数を減らせる
+        $articles = Article::all()->sortByDesc('created_at')
+            ->load(['user', 'likes', 'tags']);
 
         return view('articles.index', ['articles' => $articles]);
     }

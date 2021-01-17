@@ -20,6 +20,7 @@ Route::prefix('login')->name('login.')->group(function () {
 // ソーシャルログインで、未登録の場合の処理
 Route::prefix('register')->name('register.')->group(function () {
     Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
+    Route::post('/{provider}', 'Auth\RegisterController@registerProviderUser')->name('{provider}');
 });
 // このWebアプリ（/）にアクセスされたら、 ArticleControllerコントローラーのindexメソッドを呼び出す
 Route::get('/', 'ArticleController@index')->name('articles.index');
