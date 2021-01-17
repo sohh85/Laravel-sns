@@ -24,7 +24,7 @@ class ArticleTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testIsLikedByTheUser() // いいねシているユーザを渡したら正常にtrueが返るか
+    public function testIsLikedByTheUser() // いいねしているユーザを渡したら正常にtrueが返るか
     {
         $article = factory(Article::class)->create();
         $user = factory(User::class)->create();
@@ -35,5 +35,20 @@ class ArticleTest extends TestCase
         $result = $article->isLikedBy($user);
 
         $this->assertTrue($result);
+    }
+
+    public function testIsLikedByAnother()
+    {
+        // ファクトリで生成した各モデルをデータベースに保存するとともに、インスタンスを変数に代入
+        $article = factory(Article::class)->create();
+        $user = factory(User::class)->create();
+        $another = factory(User::class)->create();
+
+        // $anotherに代入されたUserモデルのインスタンスが、$articleをいいねしている状態を作る
+        $article->likes()->attach($another);
+
+        $result = $article->isLikedBy($user);
+
+        $this->assertFalse($result);
     }
 }
